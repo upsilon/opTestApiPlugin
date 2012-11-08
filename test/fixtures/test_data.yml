@@ -1,19 +1,23 @@
 Member:
-  member_1:
-    id: ~
-    name: "OpenPNE君"
+  member1:
+    id: 1
+    name: A
     is_active: 1
+    MemberConfig:
+      member1_api_key: { name: api_key, value: abcdef12345678900001 }
+  member2:
+    id: 2
+    name: B
+    is_active: 1
+    MemberConfig:
+      member2_api_key: { name: api_key, value: abcdef12345678900002 }
 
-MemberConfig:
-  member_address_1:
-    name: "pc_address"
-    value: "sns@example.com"
-    Member: member_1
-  member_mobile_address_1:
-    name: "mobile_address"
-    value: "sns@example.com"
-    Member: member_1
-  member_password_1:
-    name: "password"
-    value: "<?php echo md5('password') ?>"
-    Member: member_1
+ActivityData:
+  activity1:
+    id: 1
+    body: dummy1
+    Member: member1
+  activity2:
+    id: 2
+    body: dummy2
+    Member: member2

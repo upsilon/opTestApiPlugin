@@ -6,6 +6,10 @@
 $(function($) {
 
 function runTests(apiBase, apiKey) {
+  module('activity/search.json');
+
+  $.ajax(apiBase + 'test/setup.json?force=1', { async: false });
+
   asyncTest('search.json - apiKey is required', 1, function() {
     $.getJSON(apiBase + 'activity/search.json')
       .complete(function(jqXHR){
@@ -40,7 +44,7 @@ function runTests(apiBase, apiKey) {
       equal(member.friend, false, 'data[0].member.friend');
       equal(member.blocking, false, 'data[0].member.blocking');
       ok(member.profile_url.endsWith('/member/1'), 'data[0].member.profile_url');
-      ok(member.profile_image.endsWith('/dummy_file3.jpg'), 'data[0].member.profile_image');
+      ok(member.profile_image.endsWith('/no_image.gif'), 'data[0].member.profile_image');
 
       start();
     });
@@ -53,7 +57,7 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.status, 'success', 'status');
-      equal(data.data.length, 8, 'data.length');
+      ok($.isArray(data.data), 'data');
 
       start();
     });
@@ -93,9 +97,10 @@ function runTests(apiBase, apiKey) {
 }
 
 runTests(
-  'http://ukimura.dazai2.pne.jp/master/api_test.php/',
+  '../api.php/',
   {
-    '1': 'abcdef12345678900001' // member1
+    '1': 'abcdef12345678900001', // member1
+    '2': 'abcdef12345678900002'  // member2
   }
 );
 

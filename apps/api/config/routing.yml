@@ -1,0 +1,4 @@
+test_setup:
+  url: /test/setup.json
+  param: { module: test, action: setup, sf_format: json }
+  requirements: { sf_method: [get] }
