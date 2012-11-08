@@ -6,9 +6,11 @@
 $(function($) {
 
 function runTests(apiBase, apiKey) {
-  module('activity/search.json');
+  QUnit.moduleStart(function(details) {
+    $.ajax(apiBase + 'test/setup.json?force=1', { async: false });
+  });
 
-  $.ajax(apiBase + 'test/setup.json?force=1', { async: false });
+  module('activity/search.json');
 
   asyncTest('search.json - apiKey is required', 1, function() {
     $.getJSON(apiBase + 'activity/search.json')
