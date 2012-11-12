@@ -96,6 +96,35 @@ function runTests(apiBase, apiKey) {
       start();
     });
   });
+
+  module('activity/post.json');
+
+  asyncTest('post.json - simple', 2, function() {
+    $.getJSON(apiBase + 'activity/post.json',
+    {
+      apiKey: apiKey['1'],
+      body: 'hogehoge'
+    },
+    function(data) {
+      equal(data.status, 'success', 'status');
+
+      equal(data.data.body, 'hogehoge', 'data.body');
+
+      start();
+    });
+  });
+
+  asyncTest('post.json - over 140 characters', 1, function() {
+    $.getJSON(apiBase + 'activity/post.json',
+    {
+      apiKey: apiKey['1'],
+      body: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' // 141文字
+    })
+    .complete(function(jqXHR) {
+      equal(jqXHR.status, 400, 'statusCode');
+      start();
+    });
+  });
 }
 
 runTests(
