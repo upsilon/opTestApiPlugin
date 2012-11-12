@@ -45,8 +45,8 @@ function runTests(apiBase, apiKey) {
       equal(member.self, true, 'data[0].member.self');
       equal(member.friend, false, 'data[0].member.friend');
       equal(member.blocking, false, 'data[0].member.blocking');
-      ok(member.profile_url.endsWith('/member/1'), 'data[0].member.profile_url');
-      ok(member.profile_image.endsWith('/no_image.gif'), 'data[0].member.profile_image');
+      ok(member.profile_url.match(/\/member\/1$/), 'data[0].member.profile_url');
+      ok(member.profile_image.match(/\/no_image.gif$/), 'data[0].member.profile_image');
 
       start();
     });
