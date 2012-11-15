@@ -1,23 +1,130 @@
 Member:
-  member1:
+  me:
     id: 1
     name: A
     is_active: 1
     MemberConfig:
       member1_api_key: { name: api_key, value: abcdef12345678900001 }
-  member2:
+
+  # フレンド
+  friend_A:
     id: 2
     name: B
     is_active: 1
-    MemberConfig:
-      member2_api_key: { name: api_key, value: abcdef12345678900002 }
+
+  # フレンド以外
+  other:
+    id: 3
+    name: C
+    is_active: 1
+
+  # 非アクティブ
+  inactive:
+    id: 4
+    name: D
+    is_active: 0
+
+  # 被ブロック
+  blocked:
+    id: 5
+    name: D
+    is_active: 1
+
+MemberRelationship:
+  # フレンド (1 <=> 2)
+  friend_1_2:
+    is_friend: true
+    Member: me
+    MemberRelatedByMemberIdFrom: friend_A
+  friend_2_1:
+    is_friend: true
+    Member: friend_A
+    MemberRelatedByMemberIdFrom: me
+
+  # ブロック (1 <= 5)
+  block_5_1:
+    is_access_block: true
+    Member: blocked
+    MemberRelatedByMemberIdFrom: me
+
+Community:
+  community1_joining:
+    id: 1
+    name: communityA
+    CommunityMember:
+      community1_member1: { Member: me }
 
 ActivityData:
-  activity1:
+  # 自分の投稿
+  activity1_me:
     id: 1
     body: dummy1
-    Member: member1
-  activity2:
+    Member: me
+
+  # 自分の投稿 (フレンドのみ公開)
+  activity2_me_friend:
     id: 2
     body: dummy2
-    Member: member2
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_FRIEND ?>"
+    Member: me
+
+  # 自分の投稿 (非公開)
+  activity3_me_private:
+    id: 3
+    body: dummy3
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_PRIVATE ?>"
+    Member: me
+
+  # フレンドの投稿
+  activity4_friend:
+    id: 4
+    body: dummy4
+    Member: friend_A
+
+  # フレンドの投稿 (フレンドのみ公開)
+  activity5_friend_friend:
+    id: 5
+    body: dummy5
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_FRIEND ?>"
+    Member: friend_A
+
+  # フレンドの投稿 (非公開)
+  activity6_friend_private:
+    id: 6
+    body: dummy6
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_PRIVATE ?>"
+    Member: friend_A
+
+  # 非フレンドの投稿
+  activity7_other:
+    id: 7
+    body: dummy7
+    Member: other
+
+  # 非フレンドの投稿 (フレンドのみ公開)
+  activity8_other_friend:
+    id: 8
+    body: dummy8
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_FRIEND ?>"
+    Member: other
+
+  # 非フレンドの投稿 (非公開)
+  activity9_other_private:
+    id: 9
+    body: dummy9
+    public_flag: "<?php echo ActivityDataTable::PUBLIC_FLAG_PRIVATE ?>"
+    Member: other
+
+  # 自分をブロックしている人の投稿
+  activity10_blocked:
+    id: 10
+    body: dummy10
+    Member: blocked
+
+  # 参加中のコミュニティ上での自分の投稿
+  activity11_community1:
+    id: 11
+    body: dummy11
+    Member: me
+    foreign_table: community
+    foreign_id: 1

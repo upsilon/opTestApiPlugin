@@ -50,6 +50,114 @@ function runTests(apiBase, apiKey) {
     });
   });
 
+  asyncTest('search.json - visibility test (me - PUBLIC_FLAG_SNS)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '1'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (me - PUBLIC_FLAG_FRIEND)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '2'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (me - PUBLIC_FLAG_PRIVATE)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '3'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_SNS)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '4'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_FRIEND)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '5'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_PRIVATE)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '6'
+    },
+    function(data){
+      equal(data.data.length, 0, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (other - PUBLIC_FLAG_SNS)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '7'
+    },
+    function(data){
+      equal(data.data.length, 1, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (other - PUBLIC_FLAG_FRIEND)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '8'
+    },
+    function(data){
+      equal(data.data.length, 0, 'data.length');
+      start();
+    });
+  });
+
+  asyncTest('search.json - visibility test (other - PUBLIC_FLAG_PRIVATE)', 1, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      activity_id: '9'
+    },
+    function(data){
+      equal(data.data.length, 0, 'data.length');
+      start();
+    });
+  });
+
   asyncTest('search.json - all activities', 2, function() {
     $.getJSON(apiBase + 'activity/search.json',
     {
@@ -78,6 +186,23 @@ function runTests(apiBase, apiKey) {
           fail = true;
       });
       ok(!fail, 'data[].member.friend');
+
+      start();
+    });
+  });
+
+  asyncTest('search.json - community (id = 1)', 3, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      target: 'community',
+      target_id: 1
+    },
+    function(data){
+      equal(data.status, 'success', 'status');
+
+      equal(data.data.length, 1, 'data.length');
+      equal(data.data[0].id, 11, 'data[0].id');
 
       start();
     });
@@ -129,6 +254,5 @@ runTests(
   '../api.php/',
   {
     '1': 'abcdef12345678900001', // member1
-    '2': 'abcdef12345678900002'  // member2
   }
 );
