@@ -53,6 +53,20 @@ page.open(system.args[1], function(status){
         console.log("Unable to access network");
         phantom.exit(1);
     } else {
+        page.evaluate(function(){
+            var moduleName, testName;
+            window.QUnit.moduleStart(function( data ) {
+                moduleName = data.name;
+            });
+            window.QUnit.testStart(function( data ) {
+                testName = data.name;
+            });
+            window.QUnit.log(function( details ) {
+                if (details.result) return;
+                console.log( "\033[1;31mFail\033[0m: [", moduleName, "]", testName, ":", details.message );
+            });
+        });
+
         waitFor(function(){
             return page.evaluate(function(){
                 var el = document.getElementById('qunit-testresult');
