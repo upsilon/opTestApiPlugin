@@ -32,6 +32,14 @@ To execute this API, append `?force=1` to URL');
     $task->setConfiguration($configuration);
     $task->run();
 
+    $conn = Doctrine_Core::getTable('SnsConfig')->getConnection();
+    if ($conn instanceof Doctrine_Connection_Sqlite)
+    {
+      $info = $conn->getManager()->parseDsn($conn->getOption('dsn'));
+      chmod(dirname($info['database']), 0777);
+      chmod($info['database'], 0777);
+    }
+
     $task = new sfDoctrineBuildSqlTask($configuration->getEventDispatcher(), new sfFormatter());
     $task->setConfiguration($configuration);
     $task->run();
