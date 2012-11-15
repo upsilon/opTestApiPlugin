@@ -3,8 +3,6 @@
  * @author Kimura Youichi <kim.upsilon@bucyou.net>
  */
 
-$(function($) {
-
 function runTests(apiBase, apiKey) {
   QUnit.moduleStart(function(details) {
     $.ajax(apiBase + 'test/setup.json?force=1', { async: false });
@@ -134,5 +132,3 @@ runTests(
     '2': 'abcdef12345678900002'  // member2
   }
 );
-
-});
