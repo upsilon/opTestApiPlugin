@@ -21,6 +21,12 @@ Do you really want to execute?
 To execute this API, append `?force=1` to URL');
     }
 
+    $target = isset($request['target']) ? $request['target'] : null;
+    if (empty($target) || !preg_match('/^[0-9A-Za-z]+$/', $target))
+    {
+      $target = 'opTestApiPlugin';
+    }
+
     chdir(sfConfig::get('sf_root_dir'));
     $configuration = sfContext::getInstance()->getConfiguration();
 
@@ -50,7 +56,7 @@ To execute this API, append `?force=1` to URL');
 
     $task = new sfDoctrineDataLoadTask($configuration->getEventDispatcher(), new sfFormatter());
     $task->setConfiguration($configuration);
-    $task->run(array('dir_or_file' => dirname(__FILE__).'/../../../../../test/fixtures/'));
+    $task->run(array('dir_or_file' => dirname(__FILE__).'/../../../../../../'.$target.'/test/fixtures/'));
 
     return $this->renderJSON(array('status' => 'success'));
   }
