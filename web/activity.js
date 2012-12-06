@@ -216,6 +216,58 @@ function runTests(apiBase, apiKey) {
     });
   });
 
+  asyncTest('search.json - member_id = 2 (friend)', 2, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      member_id: 2
+    },
+    function(data){
+      equal(data.status, 'success', 'status');
+
+      var fail = false;
+      $.each(data.data, function(index, activity) {
+        if (activity.member.id !== '2')
+          fail = true;
+      });
+      ok(!fail, 'data[].member.friend');
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
+  });
+
+  asyncTest('search.json - member_id = 3 (not friend)', 2, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      member_id: 3
+    },
+    function(data){
+      equal(data.status, 'success', 'status');
+
+      var fail = false;
+      $.each(data.data, function(index, activity) {
+        if (activity.member.id !== '3')
+          fail = true;
+      });
+      ok(!fail, 'data[].member.friend');
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
+  });
+
+  asyncTest('search.json - member_id = 5 (blocked)', 2, function() {
+    $.getJSON(apiBase + 'activity/search.json',
+    {
+      apiKey: apiKey['1'],
+      member_id: 5
+    },
+    function(data){
+      equal(data.status, 'success', 'status');
+
+      equal(data.data.length, 0, 'data.length');
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
+  });
+
   module('activity/post.json');
 
   asyncTest('post.json - simple', 2, function() {
