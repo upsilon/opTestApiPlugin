@@ -45,9 +45,8 @@ function runTests(apiBase, apiKey) {
       equal(member.blocking, false, 'data[0].member.blocking');
       ok(member.profile_url.match(/\/member\/1$/), 'data[0].member.profile_url');
       ok(member.profile_image.match(/\/no_image.gif$/), 'data[0].member.profile_image');
-
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (me - PUBLIC_FLAG_SNS)', 1, function() {
@@ -58,8 +57,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (me - PUBLIC_FLAG_FRIEND)', 1, function() {
@@ -70,8 +69,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (me - PUBLIC_FLAG_PRIVATE)', 1, function() {
@@ -82,8 +81,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_SNS)', 1, function() {
@@ -94,8 +93,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_FRIEND)', 1, function() {
@@ -106,8 +105,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (friend - PUBLIC_FLAG_PRIVATE)', 1, function() {
@@ -118,8 +117,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 0, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (other - PUBLIC_FLAG_SNS)', 1, function() {
@@ -130,8 +129,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 1, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (other - PUBLIC_FLAG_FRIEND)', 1, function() {
@@ -142,8 +141,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 0, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - visibility test (other - PUBLIC_FLAG_PRIVATE)', 1, function() {
@@ -154,8 +153,8 @@ function runTests(apiBase, apiKey) {
     },
     function(data){
       equal(data.data.length, 0, 'data.length');
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - all activities', 2, function() {
@@ -166,9 +165,8 @@ function runTests(apiBase, apiKey) {
     function(data){
       equal(data.status, 'success', 'status');
       ok($.isArray(data.data), 'data');
-
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - friends', 2, function() {
@@ -186,9 +184,8 @@ function runTests(apiBase, apiKey) {
           fail = true;
       });
       ok(!fail, 'data[].member.friend');
-
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - community (id = 1)', 3, function() {
@@ -203,9 +200,8 @@ function runTests(apiBase, apiKey) {
 
       equal(data.data.length, 1, 'data.length');
       equal(data.data[0].id, 11, 'data[0].id');
-
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('search.json - invalid target', 1, function() {
@@ -232,9 +228,8 @@ function runTests(apiBase, apiKey) {
       equal(data.status, 'success', 'status');
 
       equal(data.data.body, 'hogehoge', 'data.body');
-
-      start();
-    });
+    })
+    .complete(function(jqXHR, textStatus){ start(); });
   });
 
   asyncTest('post.json - over 140 characters', 1, function() {
